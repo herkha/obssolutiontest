@@ -1,6 +1,8 @@
 package com.herkha.obssolutiontest.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.herkha.obssolutiontest.entity.Item;
+import com.herkha.obssolutiontest.messageDTO.ItemDTO;
 import com.herkha.obssolutiontest.repository.ItemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +62,17 @@ public class ItemServiceImpl implements ItemService{
             return true;
         }
         return false;
+    }
+
+    ObjectMapper mapper = new ObjectMapper();
+
+    @Override
+    public ItemDTO mapItemToDTO(Item item) {
+        return mapper.convertValue(item, ItemDTO.class);
+    }
+
+    @Override
+    public Item mapItemDTOItem(ItemDTO itemDTO) {
+       return mapper.convertValue(itemDTO, Item.class);
     }
 }

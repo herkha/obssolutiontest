@@ -1,6 +1,8 @@
 package com.herkha.obssolutiontest.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.herkha.obssolutiontest.entity.Order;
+import com.herkha.obssolutiontest.messageDTO.OrderDTO;
 import com.herkha.obssolutiontest.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository;
 
     @Override
-    public Order get(String id) {
+    public Order get(Long id) {
         Optional<Order> result = orderRepository.findById(id);
         if (result.isPresent()) {
             return result.get();
@@ -37,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Boolean delete(String id) {
+    public Boolean delete(Long id) {
         return null;
     }
 
@@ -47,7 +49,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order findById(String id) {
+    public Order findById(Long id) {
         return null;
     }
+    ObjectMapper mapper = new ObjectMapper();
+    @Override
+    public Order mapOrderDTOToOrder(OrderDTO orderDTO) {
+        return mapper.convertValue(orderDTO, Order.class);
+         }
+
+    @Override
+    public OrderDTO mapOrdertOrderDTO(Order order) {
+       return mapper.convertValue(order, OrderDTO.class);
+    }
+    
 }
